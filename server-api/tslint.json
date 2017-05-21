@@ -1,0 +1,24 @@
+{
+    "extends": "tslint:latest",
+    "rules": {
+        // tslint:disable-next-line:quotemark
+        "quotemark": [
+            "single", true
+        ],
+        // tslint:disable-next-line:no-empty
+        "no-empty": false,
+        "ordered-imports": [false],
+        "variable-name": [
+            "allow-trailing-underscore",
+            "allow-leading-underscore"
+        ],
+        "object-literal-sort-keys": false,
+        "trailing-comma": [
+            false
+        ],
+        // tslint:disable-next-line:arrow-parens
+        "arrow-parens": false,
+        // tslint:disable-next-line:no-trailing-whitespace
+        "no-trailing-whitespace": false
+    }
+}

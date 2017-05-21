@@ -1,0 +1,20 @@
+[{
+        "name": "HSI-HHI pair trade",
+        "description": "Trades HSI-HHI pair",
+        "content": ""
+    },
+    {
+        "name": "Snipper 1",
+        "description": "buy/sell when the price of an instrument reaches pre-set limit"
+    },
+    {
+        "name": "Snipper 2",
+        "description": "buy/sell when the price of an instrument reaches pre-set limit"
+    },
+    {
+        "name": "Snipper 3",
+        "description": "buy/sell when the price of an instrument reaches pre-set limit"
+    }
+
+
+]
