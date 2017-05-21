@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
-import { MeteorObservable, MongoObservable } from 'meteor-rxjs';
 
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';

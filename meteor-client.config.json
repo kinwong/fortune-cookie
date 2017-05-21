@@ -3,6 +3,12 @@
     "DDP_DEFAULT_CONNECTION_URL": "http://localhost:8000"
   },
   "import": [
+    "meteor-base",
+    "mongo",
+    "reactive-var",
+    "tracker",
+    "es5-shim",
+    "insecure",
     "accounts-password"
   ]
 }

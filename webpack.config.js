@@ -1,3 +1,4 @@
+
 const path = require('path');
 var fs = require("fs-extra");
 
@@ -15,6 +16,7 @@ const { CommonsChunkPlugin } = require('webpack').optimize;
 const { AotPlugin } = require('@ngtools/webpack');
 
 const nodeModules = path.join(process.cwd(), 'node_modules');
+// Meteor imports -> exports
 const serverImportsPath = path.join(process.cwd(), "server-api/imports");
 const clientImportsPath = path.join(process.cwd(), "src/server/imports")
 
