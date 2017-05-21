@@ -79,6 +79,7 @@ module.exports = {
   },
   "entry": {
     "main": [
+      "./node_modules/meteor-client.js",
       "./src/main.ts"
     ],
     "polyfills": [

@@ -2,7 +2,10 @@
 import { Mongo } from 'meteor/mongo';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MeteorObservable, MongoObservable } from 'meteor-rxjs';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+
+
 import {LogService } from '../../services/log-service';
 import * as api from '../../server/imports/api';
 

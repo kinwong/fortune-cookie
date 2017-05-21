@@ -43,7 +43,6 @@ export class AuthenticationService {
     public logout() {
         Meteor.logout();
     }
-    
     public register(
         username: string, password: string, email: string, profile?: any): Observable<boolean> {
         return Observable.create(observer => {
