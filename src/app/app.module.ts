@@ -1,20 +1,71 @@
+// Angular2 core modules.
+import { NgModule, OnInit, OnDestroy, ErrorHandler } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { RouterModule, Routes } from '@angular/router';
 
-import { AppComponent } from './app.component';
+// Core components
+import * as Services from '../services';
+import { AppComponent } from './app';
+import * as Components from '../components';
 
-@NgModule({
+import { ALL_ROUTES } from './routes';
+// import { AngularSplitModule } from 'angular-split';
+import { DataTableModule, ButtonModule } from 'primeng/primeng';
+
+ /**
+  * Represents the application root module.
+  *
+  * @export
+  * @class AppModule
+  */
+ @NgModule({
+  bootstrap: [
+    AppComponent,
+  ],
   declarations: [
-    AppComponent
+    // App
+    AppComponent,
+    Components.AppHeaderComponent,
+    // Shared
+    Components.ClockComponent,
+    // Pages
+    Components.HomePageComponent,
+    Components.PageNotFoundComponent,
+    Components.LoginPageComponent,
+    Components.RegisterPageComponent,
+    // shared components
+    Components.ExchangeListComponent,
+    Components.StrategyListComponent,
   ],
+  // providers:
   imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule
+    // Angular 2 modules.
+    CommonModule, BrowserModule, FormsModule, HttpModule,
+    RouterModule.forRoot(ALL_ROUTES),
+
+    // Application defined modules.
+    DataTableModule,
+    ButtonModule
+    // Components
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    Services.LogService,
+    Services.AlertService,
+    Services.AuthenticationService,
+    Services.PermissionGuard,
+    Services.PermissionGuardFake
+  ],
 })
-export class AppModule { }
+export class AppModule implements OnInit, OnDestroy {
+  constructor(private _logger: Services.LogService) {
+  }
+  public ngOnInit(): void {
+    this._logger.debug('ngOnInit');
+  }
+  public ngOnDestroy(): void {
+    this._logger.debug('ngOnDestroy');
+  }
+}
