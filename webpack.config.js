@@ -2,8 +2,6 @@
 const path = require('path');
 var fs = require("fs-extra");
 
-const  WebpackPreBuildPlugin = require('pre-build-webpack');
-// const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ProgressPlugin = require('webpack/lib/ProgressPlugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
@@ -16,68 +14,64 @@ const { CommonsChunkPlugin } = require('webpack').optimize;
 const { AotPlugin } = require('@ngtools/webpack');
 
 const nodeModules = path.join(process.cwd(), 'node_modules');
-// Meteor imports -> exports
-const serverImportsPath = path.join(process.cwd(), "server-api/imports");
-const clientImportsPath = path.join(process.cwd(), "src/server/imports")
-
 const genDirNodeModules = path.join(process.cwd(), 'src', '$$_gendir', 'node_modules');
-const entryPoints = ["inline","polyfills","sw-register","styles","vendor","main"];
+const entryPoints = ["inline", "polyfills", "sw-register", "styles", "vendor", "main"];
 const minimizeCss = false;
 const baseHref = "";
 const deployUrl = "";
 const postcssPlugins = function () {
-        // safe settings based on: https://github.com/ben-eb/cssnano/issues/358#issuecomment-283696193
-        const importantCommentRe = /@preserve|@license|[@#]\s*source(?:Mapping)?URL|^!/i;
-        const minimizeOptions = {
-            autoprefixer: false,
-            safe: true,
-            mergeLonghand: false,
-            discardComments: { remove: (comment) => !importantCommentRe.test(comment) }
-        };
-        return [
-            postcssUrl({
-                url: (URL) => {
-                    // Only convert root relative URLs, which CSS-Loader won't process into require().
-                    if (!URL.startsWith('/') || URL.startsWith('//')) {
-                        return URL;
-                    }
-                    if (deployUrl.match(/:\/\//)) {
-                        // If deployUrl contains a scheme, ignore baseHref use deployUrl as is.
-                        return `${deployUrl.replace(/\/$/, '')}${URL}`;
-                    }
-                    else if (baseHref.match(/:\/\//)) {
-                        // If baseHref contains a scheme, include it as is.
-                        return baseHref.replace(/\/$/, '') +
-                            `/${deployUrl}/${URL}`.replace(/\/\/+/g, '/');
-                    }
-                    else {
-                        // Join together base-href, deploy-url and the original URL.
-                        // Also dedupe multiple slashes into single ones.
-                        return `/${baseHref}/${deployUrl}/${URL}`.replace(/\/\/+/g, '/');
-                    }
-                }
-            }),
-            autoprefixer(),
-        ].concat(minimizeCss ? [cssnano(minimizeOptions)] : []);
-    };
+  // safe settings based on: https://github.com/ben-eb/cssnano/issues/358#issuecomment-283696193
+  const importantCommentRe = /@preserve|@license|[@#]\s*source(?:Mapping)?URL|^!/i;
+  const minimizeOptions = {
+    autoprefixer: false,
+    safe: true,
+    mergeLonghand: false,
+    discardComments: { remove: (comment) => !importantCommentRe.test(comment) }
+  };
+  return [
+    postcssUrl({
+      url: (URL) => {
+        // Only convert root relative URLs, which CSS-Loader won't process into require().
+        if (!URL.startsWith('/') || URL.startsWith('//')) {
+          return URL;
+        }
+        if (deployUrl.match(/:\/\//)) {
+          // If deployUrl contains a scheme, ignore baseHref use deployUrl as is.
+          return `${deployUrl.replace(/\/$/, '')}${URL}`;
+        }
+        else if (baseHref.match(/:\/\//)) {
+          // If baseHref contains a scheme, include it as is.
+          return baseHref.replace(/\/$/, '') +
+            `/${deployUrl}/${URL}`.replace(/\/\/+/g, '/');
+        }
+        else {
+          // Join together base-href, deploy-url and the original URL.
+          // Also dedupe multiple slashes into single ones.
+          return `/${baseHref}/${deployUrl}/${URL}`.replace(/\/\/+/g, '/');
+        }
+      }
+    }),
+    autoprefixer(),
+  ].concat(minimizeCss ? [cssnano(minimizeOptions)] : []);
+};
 
 module.exports = {
-  "devtool": "source-map",
-  "resolve": {
+  devtool: "source-map",
+  resolve: {
     "extensions": [
       ".ts",
       ".js"
     ],
+    modules: [
+      "./node_modules"
+    ]
+  },
+  resolveLoader: {
     "modules": [
       "./node_modules"
     ]
   },
-  "resolveLoader": {
-    "modules": [
-      "./node_modules"
-    ]
-  },
-  "entry": {
+  entry: {
     "main": [
       "./node_modules/meteor-client.js",
       "./src/main.ts"
@@ -89,12 +83,18 @@ module.exports = {
       "./src/styles.css"
     ]
   },
-  "output": {
+  output: {
     "path": path.join(process.cwd(), "dist"),
     "filename": "[name].bundle.js",
     "chunkFilename": "[id].chunk.js"
   },
-  "module": {
+  externals: [
+    {
+      sharp: '{}'
+    },
+    resolveExternals
+  ],
+  module: {
     "rules": [
       {
         "enforce": "pre",
@@ -352,18 +352,7 @@ module.exports = {
       }
     ]
   },
-  "plugins": [
-      new WebpackPreBuildPlugin(function(stats) {
-        // Copies Meteor imports -> src/api
-        console.log(`Build start - copy from '${serverImportsPath}' to '${clientImportsPath}...`);
-        fs.copy(serverImportsPath, clientImportsPath, function (err) {
-          if (err) return console.error(err)
-          console.log('success!')
-        });
-      }),
-        // new CopyWebpackPlugin([
-    //   { from: 'server-api/imports/api', to: 'src/api' }
-    // ]),
+  plugins: [
     new NoEmitOnErrorsPlugin(),
     new GlobCopyWebpackPlugin({
       "patterns": [
@@ -395,15 +384,15 @@ module.exports = {
         let leftIndex = entryPoints.indexOf(left.names[0]);
         let rightindex = entryPoints.indexOf(right.names[0]);
         if (leftIndex > rightindex) {
-            return 1;
+          return 1;
         }
         else if (leftIndex < rightindex) {
-            return -1;
+          return -1;
         }
         else {
-            return 0;
+          return 0;
         }
-    }
+      }
     }),
     new BaseHrefWebpackPlugin({}),
     new CommonsChunkPlugin({
@@ -413,7 +402,7 @@ module.exports = {
     new CommonsChunkPlugin({
       "name": "vendor",
       "minChunks": (module) => module.resource &&
-                (module.resource.startsWith(nodeModules) || module.resource.startsWith(genDirNodeModules)),
+        (module.resource.startsWith(nodeModules) || module.resource.startsWith(genDirNodeModules)),
       "chunks": [
         "main"
       ]
@@ -443,3 +432,18 @@ module.exports = {
     "historyApiFallback": true
   }
 };
+
+function resolveExternals(context, request, callback) {
+  return resolveMeteor(request, callback) ||
+    callback();
+}
+
+function resolveMeteor(request, callback) {
+  var match = request.match(/^meteor\/(.+)$/);
+  var pack = match && match[1];
+
+  if (pack) {
+    callback(null, 'Package["' + pack + '"]');
+    return true;
+  }
+}

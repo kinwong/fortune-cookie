@@ -21,6 +21,7 @@
     ]
   },
   "exclude": [
-    "server-api"
+    "backend",
+    "node_modules"
   ]
 }

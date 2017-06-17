@@ -7,7 +7,6 @@ import { environment } from './environments/environment';
 
 if (environment.production) {
   enableProdMode();
-  Meteor.
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule);

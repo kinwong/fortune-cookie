@@ -9,6 +9,7 @@
     "tracker",
     "es5-shim",
     "insecure",
-    "accounts-password"
+    "accounts-password",
+    "dynamic-import"
   ]
 }

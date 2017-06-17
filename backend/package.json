@@ -6,19 +6,23 @@
     "start": "meteor run"
   },
   "dependencies": {
+    "@types/meteor": "^1.4.2",
+    "@types/winston": "^2.3.3",
     "babel-runtime": "^6.20.0",
+    "bcrypt": "^1.0.2",
     "csv-parse": "^1.2.0",
     "lodash": "^4.17.4",
-    "meteor-node-stubs": "~0.2.4",
+    "meteor-node-stubs": "^0.2.11",
     "meteor-rxjs": "^0.4.7",
     "moment": "^2.18.1",
-    "rxjs": "^5.4.0",
-    "typescript": "^2.3.2",
+    "rxjs": "^5.4.1",
+    "tslint": "^5.4.3",
+    "typescript": "^2.4.0",
     "winston": "^2.3.1"
   },
   "devDependencies": {
     "@types/csv-parse": "^1.1.8",
-    "@types/lodash": "^4.14.64",
+    "@types/lodash": "^4.14.66",
     "@types/meteor": "^1.4.1",
     "@types/winston": "^2.3.2",
     "tslint": "^5.2.0"
