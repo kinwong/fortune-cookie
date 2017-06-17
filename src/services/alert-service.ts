@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { LogService } from './log-service';
 
@@ -9,7 +9,7 @@ export class AlertService {
     private readonly _subject = new Subject<any>();
     private _keepAfterNavigationChange = false;
 
-    constructor(private _logger: LogService, private _router: Router) {
+    constructor(private _router: Router) {
         // clear alert message on route change
         _router.events.subscribe(event => {
             if (event instanceof NavigationStart) {

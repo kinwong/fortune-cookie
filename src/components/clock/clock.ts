@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     moduleId: module.id,
-    selector: 'clock',
+    selector: 'fc-clock',
     template: `
     <div>{{dateTime}}</div>
-    `,
+    `
 })
 export class ClockComponent implements OnInit, OnDestroy {
     public dateTime: Date;

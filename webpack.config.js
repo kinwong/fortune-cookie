@@ -1,7 +1,5 @@
 
 const path = require('path');
-var fs = require("fs-extra");
-
 const ProgressPlugin = require('webpack/lib/ProgressPlugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const autoprefixer = require('autoprefixer');

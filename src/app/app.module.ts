@@ -9,9 +9,9 @@ import { RouterModule, Routes } from '@angular/router';
 // Core components
 import * as Services from '../services';
 import { AppComponent } from './app';
+import { ALL_ROUTES } from './routes';
 import * as Components from '../components';
 
-import { ALL_ROUTES } from './routes';
 // import { AngularSplitModule } from 'angular-split';
 import { DataTableModule, ButtonModule } from 'primeng/primeng';
 
@@ -22,25 +22,6 @@ import { DataTableModule, ButtonModule } from 'primeng/primeng';
   * @class AppModule
   */
  @NgModule({
-  bootstrap: [
-    AppComponent,
-  ],
-  declarations: [
-    // App
-    AppComponent,
-    Components.AppHeaderComponent,
-    // Shared
-    Components.ClockComponent,
-    // Pages
-    Components.HomePageComponent,
-    Components.PageNotFoundComponent,
-    Components.LoginPageComponent,
-    Components.RegisterPageComponent,
-    // shared components
-    Components.ExchangeListComponent,
-    Components.StrategyListComponent,
-  ],
-  // providers:
   imports: [
     // Angular 2 modules.
     CommonModule, BrowserModule, FormsModule, HttpModule,
@@ -55,17 +36,23 @@ import { DataTableModule, ButtonModule } from 'primeng/primeng';
     Services.LogService,
     Services.AlertService,
     Services.AuthenticationService,
-    Services.PermissionGuard,
-    Services.PermissionGuardFake
+    Services.PermissionGuard
   ],
+  declarations: [
+    // App
+    Components.AppHeaderComponent,
+    // Shared
+    // Components.ClockComponent,
+    // Pages
+    Components.HomePageComponent,
+    Components.PageNotFoundComponent,
+    Components.LoginPageComponent,
+    Components.RegisterPageComponent,
+    // shared components
+    Components.ExchangeListComponent,
+    Components.StrategyListComponent,
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule implements OnInit, OnDestroy {
-  constructor(private _logger: Services.LogService) {
-  }
-  public ngOnInit(): void {
-    this._logger.debug('ngOnInit');
-  }
-  public ngOnDestroy(): void {
-    this._logger.debug('ngOnDestroy');
-  }
+export class AppModule {
 }

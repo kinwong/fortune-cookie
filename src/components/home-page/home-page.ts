@@ -30,7 +30,7 @@ const defaultConfig: IConfig = {
             size: 50,
             rows: [
                 { visible: true, size: 60, type: 'doc' },
-                { visible: true, size: 40, type: 'C' }    
+                { visible: true, size: 40, type: 'C' }
             ]
         },
         {
@@ -38,8 +38,8 @@ const defaultConfig: IConfig = {
             size: 25,
             rows: [
                 { visible: true, size: 20, type: 'D' },
-                { visible: true, size: 30, type: 'E' },    
-                { visible: true, size: 50, type: 'F' }    
+                { visible: true, size: 30, type: 'E' },
+                { visible: true, size: 50, type: 'F' }
             ]
         }
     ],

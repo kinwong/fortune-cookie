@@ -6,9 +6,10 @@ import { AuthenticationService } from '../../services';
 @Component({
   moduleId: module.id,
    host: {
-    class: 'navbar navbar-fixed-top navbar-dark bg-inverse' 
+    class: 
+    'navbar navbar-fixed-top navbar-dark bg-inverse'
   },
-  selector: 'app-header',
+  selector: 'fc-header',
   styleUrls: ['./app-header.scss'],
   templateUrl: './app-header.html'
 })
@@ -19,7 +20,7 @@ export class AppHeaderComponent {
 
   constructor(private _router: Router, private _authenticationService: AuthenticationService) {
     this.user = '????';
-    
+
     this._router.events.subscribe(() => {
       if (this.open) {
         this.toggleOpen();
